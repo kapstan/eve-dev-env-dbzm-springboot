@@ -1,0 +1,16 @@
+{
+  "name": "eve-dev-db-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "topic.prefix":"eve.messages-prefix",
+    "topic.suffix":"eve.messages-suffix",
+    "database.hostname": "postgres",
+    "plugin.name": "pgoutput",
+    "database.port": "5432",
+    "database.user": "postgresuser",
+    "database.password": "postgrespwd",
+    "database.dbname": "eve_dev_db",
+    "database.server.name": "example",
+    "table.include.list": "public.messages"
+  }
+}
