@@ -6,9 +6,9 @@ This is a test development environment, complete with a SpringBoot project, and 
 
 ### Dependencies
 
-Docker Desktop
-JDK v11
-Kotlin v1.6
+- Docker Desktop
+- JDK v11
+- Kotlin v1.6
 
 ---
 
