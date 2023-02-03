@@ -4,13 +4,15 @@
     "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
     "topic.prefix":"eve.messages-prefix",
     "topic.suffix":"eve.messages-suffix",
-    "database.hostname": "postgres",
+    "database.hostname": "msk-poc-source-instance-1.ccjnrbmgqeub.us-east-1.rds.amazonaws.com",
     "plugin.name": "pgoutput",
     "database.port": "5432",
-    "database.user": "postgresuser",
-    "database.password": "postgrespwd",
-    "database.dbname": "eve_dev_db",
-    "database.server.name": "example",
-    "table.include.list": "public.messages"
+    "database.user": "postgres",
+    "database.password": "!Pwd1234",
+    "database.dbname": "lily_dev",
+    "database.server.name": "lily_dev",
+    "tasks.max": "1",
+    "transforms.unwrap.type": "io.debezium.transforms.UnwrapFromEnvelope",
+    "table.include.list": "public.cga_action,public.cga_attachment,public.cga_drawback,public.cga_game_def,public.cga_issue_doc,public.cga_option,public.companies,public.exit_url,public.game_attendee_spec,public.game_def,public.game_def_version,public.game_invite,public.game_invite_attendee_spec,public.game_play,public.users"
   }
 }
