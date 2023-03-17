@@ -21,8 +21,8 @@ public class DemoApp{
         };
     }
 
-    @Bean 
+    /*@Bean 
     public NewTopic topic() {
         return TopicBuilder.name("my-topic").partitions(1).replicas(1).build();
-    }
+    }*/
 }
