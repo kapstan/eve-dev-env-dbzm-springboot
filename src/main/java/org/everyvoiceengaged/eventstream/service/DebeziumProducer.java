@@ -1,11 +1,12 @@
 package org.everyvoiceengaged.eventstream.service;
 
-import org.apache.catalina.Engine;
-import org.apache.catalina.startup.EngineConfig;
 import org.apache.kafka.common.protocol.types.Struct;
-import org.springframework.boot.context.properties.PropertyMapper.Source;
+import org.apache.kafka.connect.source.SourceRecord;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+
+import io.debezium.config.Configuration;
+import io.debezium.embedded.EmbeddedEngine;
 
 @Service
 public class DebeziumProducer{
@@ -15,7 +16,7 @@ public class DebeziumProducer{
 
     public DebeziumProducer( KafkaTemplate<String, String> kafkaTemplate ){
         this.kafkaTemplate = kafkaTemplate;
-        Configuration config = Configuration.create()
+        Configuration props = Configuration.create()
         .with("connector.class", "io.debezium.connector.postgresql.PostgresConnector")
         .with("offset.storage", "org.apache.kafka.connect.storage.FileOffsetbackingStore")
         .with("connector.storage.file.filename", "/tmp/offset.dat")
@@ -30,15 +31,15 @@ public class DebeziumProducer{
         .build();
 
 
-        engine = engine.create()
-        .using( config )
-        .notifying( this::handleEvent )
+        engine = EmbeddedEngine.create()
+        .using( props )
+        .notifying( this::handleEvents )
         .build();
 
-        engine.start(); 
+        engine.run(); 
     }
 
-    public void handleEvents(Source record){
+    public void handleEvents(SourceRecord record){
         Struct value = (Struct) record.value();
         Struct after = value.getStruct("after");
 
