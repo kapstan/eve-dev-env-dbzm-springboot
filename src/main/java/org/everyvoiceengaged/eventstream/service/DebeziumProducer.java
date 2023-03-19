@@ -1,12 +1,21 @@
 package org.everyvoiceengaged.eventstream.service;
 
-import org.apache.kafka.common.protocol.types.Struct;
+import java.util.Properties;
+import java.util.concurrent.ExecutionException;
+
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import io.debezium.config.Configuration;
+import io.debezium.data.Envelope;
 import io.debezium.embedded.EmbeddedEngine;
+import io.debezium.engine.DebeziumEngine;
 
 @Service
 public class DebeziumProducer{
@@ -43,7 +52,7 @@ public class DebeziumProducer{
         Struct value = (Struct) record.value();
         Struct after = value.getStruct("after");
 
-        Integer id = after.getInt("id");
+        Integer id = after.getInt32("id");
         String name = after.getString("name");
 
         String message = String.format( "id: %d, name: %s", id, name );
