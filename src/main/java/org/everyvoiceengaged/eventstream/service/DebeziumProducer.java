@@ -2,6 +2,15 @@ package org.everyvoiceengaged.eventstream.service;
 
 import io.debezium.config.Configuration;
 import io.debezium.embedded.EmbeddedEngine;
+import io.debezium.engine.ChangeEvent;
+import io.debezium.engine.DebeziumEngine;
+import io.debezium.engine.format.Json;
+import org.apache.kafka.connect.storage.FileOffsetBackingStore;
+
+import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -12,46 +21,49 @@ import org.springframework.stereotype.Service;
 public class DebeziumProducer{
 
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private final EmbeddedEngine engine;
-    //private final DebeziumEngine<ChangeEvent<String, Struct>> deezEngine;
+    //private final EmbeddedEngine engine;
+    private DebeziumEngine<ChangeEvent<String, String>> deezEngine;
 
     public DebeziumProducer( KafkaTemplate<String, String> kafkaTemplate ){
         this.kafkaTemplate = kafkaTemplate;
         Configuration config = Configuration.create()
         .with("connector.class", "io.debezium.connector.postgresql.PostgresConnector")
-        .with("offset.storage", "org.apache.kafka.connect.storage.FileOffsetbackingStore")
-        .with("connector.storage.file.filename", "/tmp/offset.dat")
-        .with("offset.flush.interval.ms", 60000)
+        .with("offset.storage", "org.apache.kafka.connect.storage.FileOffsetBackingStore")
+        .with("connector.storage.file.filename", "~/offset.dat")
+        .with("offset.flush.interval.ms", 6000)
         .with("name", "my-connector")
         .with("database.hostname", "localhost")
         .with("database.port", 5432)
-        .with("database.user", "postgres")
-        .with("database.password", "postgres")
-        .with("database.dbname", "mydb")
-        .with("table.whitelist", "mytable")
+        .with("database.user", "postgresuser"/*"postgres"*/)
+        .with("database.password", "postgrespwd"/*postgres"*/)
+        .with("database.dbname", "eve_dev_db"/* "mydb" */)
+        .with("table.whitelist", "eve_dev_db.mytable")
+        .with("topic.prefix", "my-topic__")
         .build();
 
-       /*  Properties props = config.asProperties();
-        try (
+       Properties props = config.asProperties();
+        
             deezEngine = DebeziumEngine.create(Json.class)
             .using(props)
-            .notifying(this::handleEvent)
+            .notifying(record -> {
+                System.out.println(record);
+                kafkaTemplate.send("my-topic", record.toString());
+            })
             .build();
-        )
-        {
+        
+        
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.execute(deezEngine);
-        }*/
         
-        engine = EmbeddedEngine.create()
+        
+        /*engine = EmbeddedEngine.create()
             .using( config )
             .notifying( this::handleEvents )
             .build();
         
-        
-
-
-        engine.run();
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(engine);
+        System.out.print("DebeziumProducer Constructor: This puppy is running");*/
     }
 
     /*public  Consumer<ChangeEvent<Struct, Struct>> handleEvent(ChangeEvent<String, String> record){
@@ -68,8 +80,8 @@ public class DebeziumProducer{
         };
     }*/
 
-    public void handleEvents(SourceRecord record){
-        Struct value = (Struct) record.value();
+    public void handleEvents(SourceRecord sourceRecord){
+        Struct value = (Struct) sourceRecord.value();
         Struct after = value.getStruct("after");
 
         Integer id = after.getInt32("id");
@@ -77,5 +89,6 @@ public class DebeziumProducer{
 
         String message = String.format( "id: %d, name: %s", id, name );
         kafkaTemplate.send("my-topic", message);
+        System.out.print("HandledEvent");
     }
 }
