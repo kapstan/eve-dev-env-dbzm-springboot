@@ -38,7 +38,7 @@ public class DebeziumProducer{
         .with("connector.storage.file.filename", "/tmp/offset.dat")
         .with("offset.flush.interval.ms", 60000)
         .with("name", "my-connector")
-        .with("database.hostname.", "localhost")
+        .with("database.hostname", "localhost")
         .with("database.port", 5432)
         .with("database.user", "postgres")
         .with("database.password", "postgres")
