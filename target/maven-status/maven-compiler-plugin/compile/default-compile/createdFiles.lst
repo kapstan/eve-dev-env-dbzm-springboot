@@ -1,0 +1,6 @@
+org/everyvoiceengaged/eventstream/config/KafkaConfig.class
+org/everyvoiceengaged/eventstream/DemoApp.class
+org/everyvoiceengaged/eventstream/service/DebeziumProducer.class
+org/everyvoiceengaged/eventstream/service/KafkaProducer.class
+org/everyvoiceengaged/eventstream/config/KafkaStreamsConfig.class
+org/everyvoiceengaged/eventstream/service/KafkaConsumer.class

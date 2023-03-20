@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-DemoApp<debezium-springboot-postgres>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "org.everyvoiceengaged.eventstream.DemoApp",
+            "projectName": "debezium-springboot-postgres",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
