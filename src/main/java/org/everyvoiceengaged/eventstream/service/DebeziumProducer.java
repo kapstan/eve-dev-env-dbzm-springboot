@@ -1,26 +1,11 @@
 package org.everyvoiceengaged.eventstream.service;
 
-import java.util.function.Consumer;
-import java.util.Properties;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.serialization.StringSerializer;
+import io.debezium.config.Configuration;
+import io.debezium.embedded.EmbeddedEngine;
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-
-import io.debezium.config.Configuration;
-import io.debezium.data.Envelope;
-import io.debezium.embedded.EmbeddedEngine;
-import io.debezium.engine.ChangeEvent;
-import io.debezium.engine.DebeziumEngine;
-import io.debezium.engine.format.Json;
 
 
 @Service
