@@ -1,7 +1,7 @@
 package org.everyvoiceengaged.eventstream.service;
 
-import org.springframework.stereotype.Service;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
 
 @Service
 public class KafkaProducer{
