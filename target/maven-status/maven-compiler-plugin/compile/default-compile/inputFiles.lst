@@ -1,0 +1,5 @@
+/mnt/c/Users/mjorg/.vscode/eve-dev-env-dbzm-springboot/src/main/java/org/everyvoiceengaged/eventstream/service/DebeziumProducer.java
+/mnt/c/Users/mjorg/.vscode/eve-dev-env-dbzm-springboot/src/main/java/org/everyvoiceengaged/eventstream/service/KafkaConsumer.java
+/mnt/c/Users/mjorg/.vscode/eve-dev-env-dbzm-springboot/src/main/java/org/everyvoiceengaged/eventstream/service/KafkaProducer.java
+/mnt/c/Users/mjorg/.vscode/eve-dev-env-dbzm-springboot/src/main/java/org/everyvoiceengaged/eventstream/config/KafkaConfig.java
+/mnt/c/Users/mjorg/.vscode/eve-dev-env-dbzm-springboot/src/main/java/org/everyvoiceengaged/eventstream/DemoApp.java
