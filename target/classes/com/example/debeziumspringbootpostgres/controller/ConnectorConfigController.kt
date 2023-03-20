@@ -53,5 +53,4 @@ class ConnectorConfigController() {
     );
     return ResponseEntity(response, HttpStatus.OK);
   }
-
 } 
