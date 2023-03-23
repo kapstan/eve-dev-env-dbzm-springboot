@@ -17,14 +17,16 @@ public class DemoApp{
 
     public static void main(String[] args){
         SpringApplication.run(DemoApp.class, args);
-        KafkaProducer producer = new KafkaProducer(config.kafkaTemplate());
-        producer.sendMessage("Testing 123");
     }
 
     @Bean
     public CommandLineRunner runner(KafkaProducer producer){
         return args -> {
+            producer.sendMessage("Testing 123");
             producer.sendMessage("Hi EVE!");
+            for (int i = 1; i < 50; i++){
+                producer.sendMessage("Test message number" + i);
+            }
         };
     }
 
